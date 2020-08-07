@@ -1,0 +1,70 @@
+<header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <strong>Currencies</strong>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="container mt-3">
+  <div class="row mb-3">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">USD</h5>
+          <p>{{latest?.rates['USD']}}</p> 
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">EUR</h5>
+          <p>{{latest?.rates['EUR']}}</p> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <dx-chart
+            palette="Violet"
+            [autoHidePointMarkers]="false"
+            [dataSource]="historicalDataSource">
+            <dxi-series
+                *ngFor="let currency of currencies"
+                [valueField]="currency.value"
+                [name]="currency.name">
+            </dxi-series>
+            <dxo-common-series-settings #seriesSettings
+                argumentField="date"
+                type="line">
+            </dxo-common-series-settings>
+            <dxo-margin [bottom]="20"></dxo-margin>
+            <dxo-argument-axis
+                [valueMarginsEnabled]="false">
+                <dxo-grid [visible]="true"></dxo-grid>
+            </dxo-argument-axis>
+            <dxo-legend
+                verticalAlignment="bottom"
+                horizontalAlignment="center"
+                itemTextPosition="bottom">
+            </dxo-legend>
+            <dxo-title
+                text="Historical last 30 days">
+                <dxo-subtitle text="(TRY / USD, EUR)">
+                </dxo-subtitle>
+            </dxo-title>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+          </dx-chart>
+
+          <dx-data-grid [dataSource]="historicalDataSource"></dx-data-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
